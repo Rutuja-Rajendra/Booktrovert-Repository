@@ -11,8 +11,13 @@ import com.bookstore.booktrovert.repository.BookRepository;
 @Service
 public class BookService {
 
-	@Autowired
-	private BookRepository bookRepository;
+	private final BookRepository bookRepository;
+	
+	public BookService (BookRepository bookRepository)
+	{
+		this.bookRepository = bookRepository;
+	}
+	
 	
 	public Book addBook(Book book)
 	{
@@ -22,5 +27,19 @@ public class BookService {
 	public List<Book> getAllBooks()
 	{
 		return bookRepository.findAll();
+	}
+	
+	public Book updateQuantity (Long id, int quantity)
+	{
+		Book book = bookRepository.findById(id).
+				orElseThrow(() -> new RuntimeException("Book not found"));
+		
+		book.setQuantity(quantity);
+		return bookRepository.save(book);
+	}
+	
+	public void deleteBook (Long id)
+	{
+		bookRepository.deleteById(id);
 	}
 }
