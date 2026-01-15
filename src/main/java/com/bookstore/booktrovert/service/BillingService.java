@@ -1,5 +1,7 @@
 package com.bookstore.booktrovert.service;
 
+import java.util.List;
+
 import javax.management.JMRuntimeException;
 
 import org.springframework.stereotype.Service;
@@ -26,6 +28,14 @@ public class BillingService {
 		this.billRepository = billRepository;
 		this.bookRepository = bookRepository;
 	}
+	
+	
+	public List<BillItem> getBillItems(Long billId) 
+	{
+        return billItemRepository.findByBillId(billId);
+    }
+	
+	
 	
 	public Bill generateBill(BillRequestDTO request)
 	{
@@ -68,5 +78,7 @@ public class BillingService {
 		
 		bill.setTotalAmount(total);
 		return billRepository.save(bill);
+		
+		
 	}
 }

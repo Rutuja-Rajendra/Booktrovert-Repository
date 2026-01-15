@@ -5,15 +5,23 @@ import java.time.LocalDateTime;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "biils")
+@Table(name = "bills")
 public class Bill {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	
 	private LocalDateTime billDate;
 	private double totalAmount;
+	
+	
+	@PrePersist
+    public void onCreate() {
+        this.billDate = LocalDateTime.now();
+    }
+	
 	public Long getId() {
 		return id;
 	}
@@ -23,9 +31,8 @@ public class Bill {
 	public LocalDateTime getBillDate() {
 		return billDate;
 	}
-	public void setBillTime() {
-		billDate = LocalDateTime.now();
-	}
+	
+	
 	public double getTotalAmount() {
 		return totalAmount;
 	}
@@ -33,9 +40,6 @@ public class Bill {
 		this.totalAmount = totalAmount;
 	}
 	
-	public Bill()
-	{
-		this.billDate = LocalDateTime.now();
-	}
+	
 	
 }
