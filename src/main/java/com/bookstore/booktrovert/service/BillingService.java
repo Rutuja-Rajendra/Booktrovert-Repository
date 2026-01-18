@@ -4,9 +4,13 @@ import java.util.List;
 
 import javax.management.JMRuntimeException;
 
+import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Service;
 
+import com.bookstore.booktrovert.dto.BillItemResponseDTO;
 import com.bookstore.booktrovert.dto.BillRequestDTO;
+import com.bookstore.booktrovert.dto.BillResponseDTO;
 import com.bookstore.booktrovert.entity.Bill;
 import com.bookstore.booktrovert.entity.BillItem;
 import com.bookstore.booktrovert.entity.Book;
@@ -30,10 +34,39 @@ public class BillingService {
 	}
 	
 	
-	public List<BillItem> getBillItems(Long billId) 
+//	public List<BillItem> getBillItems(Long billId) 
+//	{
+//        return billItemRepository.findByBillId(billId);
+//    }
+	
+	
+	public BillResponseDTO getBillWithItems(Long billId)
 	{
-        return billItemRepository.findByBillId(billId);
-    }
+		Bill bill = billRepository.findById(billId)
+				.orElseThrow(() -> new RuntimeException("Bill Not found"));
+		
+		
+		List<BillItem> billItems = billItemRepository.findByBillId(billId);
+		
+		List<BillItemResponseDTO> itemsDTO = billItems.stream().map(item -> {
+			BillItemResponseDTO dto = new BillItemResponseDTO();
+			dto.setBookId(item.getBookId());
+			dto.setBookName(item.getBookName());
+			dto.setQuantity(item.getQuantity());
+			dto.setPrice(item.getPrice());
+			
+			return dto;
+		}).collect(Collectors.toList());
+		
+		BillResponseDTO response = new BillResponseDTO();
+		response.setBillID(bill.getId());
+		response.setBillDate(bill.getBillDate());
+		response.setItems(itemsDTO);
+		response.setTotalPrice(bill.getTotalAmount());
+		
+		return response;
+	}
+	
 	
 	
 	
@@ -53,7 +86,7 @@ public class BillingService {
 			
 			if(book.getQuantity() < item.getQuantity())
 			{
-				throw new JMRuntimeException("Insufficient Stock");
+				throw new RuntimeException("Insufficient Stock");
 			}
 			
 			//reduce inventory
@@ -80,5 +113,7 @@ public class BillingService {
 		return billRepository.save(bill);
 		
 		
+		
+	
 	}
 }

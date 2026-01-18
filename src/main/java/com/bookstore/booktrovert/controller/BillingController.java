@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bookstore.booktrovert.dto.BillRequestDTO;
+import com.bookstore.booktrovert.dto.BillResponseDTO;
 import com.bookstore.booktrovert.entity.Bill;
 import com.bookstore.booktrovert.entity.BillItem;
 import com.bookstore.booktrovert.service.BillingService;
@@ -34,9 +35,17 @@ public class BillingController {
 	}
 	
 	
-	@GetMapping("/{billId}/items")
-	public List<BillItem> getBillItems(@PathVariable Long billId)
+//	@GetMapping("/{billId}/items")
+//	public List<BillItem> getBillItems(@PathVariable Long billId)
+//	{
+//		return billingService.getBillItems(billId);
+//	}
+	
+	
+	@GetMapping("/{billId}")
+	public BillResponseDTO getBill(@PathVariable Long billId)
 	{
-		return billingService.getBillItems(billId);
+		return billingService.getBillWithItems(billId);
 	}
+	
 }
