@@ -1,5 +1,8 @@
 package com.bookstore.booktrovert.service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,11 +31,18 @@ public class ReportService {
 		return billRepository.count();
 	}
 	
-	public double getTotalSale()
-	{
-		Double amount = billRepository.getTotalSales();
-		return amount != null ? amount : 0.0;
+	public double getTodaySales() {
+
+	    LocalDate today = LocalDate.now();
+
+	    LocalDateTime startOfDay = today.atStartOfDay();
+	    LocalDateTime endOfDay = today.atTime(LocalTime.MAX);
+
+	    Double amount = billRepository.getTodaySales(startOfDay, endOfDay);
+
+	    return amount != null ? amount : 0.0;
 	}
+
 	
 	public List<String> getTopSellingBooks()
 	{

@@ -32,7 +32,7 @@ public class ReportController {
 	@GetMapping("/total-sales")
 	public double getTotalSales()
 	{
-		return reportService.getTotalSale();
+		return reportService.getTodaySales();
 	}
 	
 	@GetMapping("/top-books")
