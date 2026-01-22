@@ -1,0 +1,34 @@
+!<!DOCTYPE html>
+<html>
+	<head>
+		<title>
+			Select Books
+		</title>
+	</head>
+	
+	<body>
+		
+		<h2>Select Books</h2>
+		
+		<input type="text" id="search" placeholder="Search Books">
+		<button onclick="loadBooks()">Search</button>
+		
+		<table border="1">
+			<thead>
+				<tr>
+					<th>Book</th>
+					<th>Price</th>
+					<th>Available</th>
+					<th>Quantity</th>
+					<th>Add</th>
+				</tr>
+			</thead>
+			
+			<tbody id="bookTable"></tbody>
+		</table>
+		
+		<a href="billing.html">Go to Billings</a>
+		
+		<script src="../js/select-books.js"></script>
+	</body>
+</html>
