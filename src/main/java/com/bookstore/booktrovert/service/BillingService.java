@@ -1,4 +1,4 @@
-package com.bookstore.booktrovert.service;
+ package com.bookstore.booktrovert.service;
 
 import java.util.List;
 
@@ -17,6 +17,8 @@ import com.bookstore.booktrovert.entity.Book;
 import com.bookstore.booktrovert.repository.BillItemRepository;
 import com.bookstore.booktrovert.repository.BillRepository;
 import com.bookstore.booktrovert.repository.BookRepository;
+
+import jakarta.transaction.Transactional;
 
 @Service
 public class BillingService {
@@ -39,7 +41,7 @@ public class BillingService {
 //        return billItemRepository.findByBillId(billId);
 //    }
 	
-	
+	@Transactional
 	public BillResponseDTO getBillWithItems(Long billId)
 	{
 		Bill bill = billRepository.findById(billId)
@@ -69,7 +71,7 @@ public class BillingService {
 	
 	
 	
-	
+	@Transactional
 	public Bill generateBill(BillRequestDTO request)
 	{
 		Bill bill = new Bill();

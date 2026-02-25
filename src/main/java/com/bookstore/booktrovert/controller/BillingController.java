@@ -1,7 +1,5 @@
 package com.bookstore.booktrovert.controller;
 
-import java.util.List;
-
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bookstore.booktrovert.dto.BillRequestDTO;
 import com.bookstore.booktrovert.dto.BillResponseDTO;
 import com.bookstore.booktrovert.entity.Bill;
-import com.bookstore.booktrovert.entity.BillItem;
 import com.bookstore.booktrovert.service.BillingService;
 
 @RestController
