@@ -3,10 +3,18 @@ let selectedItems = [];
 function loadBooks()
 {
 	fetch("http://localhost:8081/api/books")
-	.then(res => res.json)
+	.then(res => res.json())
 	.then(data => {
-		const table = document.getElementById(bookTable);
-		table.innerHTML = "";
+		const table = document.getElementById("bookTable");
+		//
+		
+		if(!table)
+			{
+				console.error("bookTable not found");
+				return;
+			}
+			
+			table.innerHTML = "";
 		
 		data.forEach(book =>
 			{

@@ -6,7 +6,7 @@
 		</title>
 	</head>
 	
-	<body>
+	<body onload="loadBooks()">
 		
 		<h2>Select Books</h2>
 		
@@ -14,21 +14,24 @@
 		<button onclick="loadBooks()">Search</button>
 		
 		<table border="1">
-			<thead>
-				<tr>
-					<th>Book</th>
-					<th>Price</th>
-					<th>Available</th>
-					<th>Quantity</th>
-					<th>Add</th>
-				</tr>
-			</thead>
-			
-			<tbody id="bookTable"></tbody>
+		    <thead>
+		        <tr>
+		            <th>Book</th>
+		            <th>Price</th>
+		            <th>Available</th>
+		            <th>Quantity</th>
+		            <th>Add</th>
+		        </tr>
+		    </thead>
+
+		    <!-- VERY IMPORTANT PART -->
+		    <tbody id="bookTable">
+		    </tbody>
+
 		</table>
 		
 		<a href="billing.html">Go to Billings</a>
 		
-		<script src="../js/select-books.js"></script>
+		<script src="/js/select-books.js"></script>
 	</body>
 </html>
