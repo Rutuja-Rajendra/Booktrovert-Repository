@@ -19,19 +19,26 @@ import com.bookstore.booktrovert.service.BookService;
 
 @RestController
 @RequestMapping("/api/books")
-@CrossOrigin
+@CrossOrigin(origins = "*")
 public class BookController {
 
 	@Autowired
 	private BookService bookService;
 	
-	@PostMapping
-	public Book addBook(@RequestBody Book book)
+	@GetMapping("/addbooks")
+	public String testingGet()
 	{
-		return bookService.addBook(book);
+		return "Get is working";
 	}
+
 	
-	@GetMapping
+//	@PostMapping("/addbooks")
+//	public Book addBook(@RequestBody Book book)
+//	{
+//		return bookService.addBook(book);
+//	}
+	
+	@GetMapping("/getbooks")
 	public List<Book> getAllBooks()
 	{
 		return bookService.getAllBooks();
