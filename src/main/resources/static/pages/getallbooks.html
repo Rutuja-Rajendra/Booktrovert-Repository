@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Get All Books</title>
+	</head>
+	
+	<body>
+		
+		<h1>Get All Books</h1>
+		
+		<div class="getallbooks">
+			<table id= "bookstable" border="1">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Name</th>
+						<th>Author</th>
+						<th>Price</th>
+						<th>Quantity</th>
+					</tr>
+				</thead>
+				<tbody id="booktablebody">
+						
+				</tbody>
+			</table>
+		</div>
+		
+	</body>
+	
+	<script>
+		
+		const base_url = "http://localhost:8081/api/books";
+		
+		fetch(base_url + "/getbooks")
+		.then(res => res.json())
+		.then(data => {
+			let tablebody = document.getElementById("booktablebody");
+			
+			data.forEach(book => {
+				let row = `
+				<tr>
+					<td>${book.id}</td>
+					<td>${book.name}</td>
+					<td>${book.author}</td>
+					<td>${book.price}</td>
+					<td>${book.quantity}</td>
+				</tr>
+				`;
+				tablebody.innerHTML += row;	
+			});
+		})
+		.catch(error => console.error("Error", error));
+		
+	</script>
+</html>

@@ -1,6 +1,7 @@
 package com.bookstore.booktrovert.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,5 +42,10 @@ public class BookService {
 	public void deleteBook (Long id)
 	{
 		bookRepository.deleteById(id);
+	}
+	
+	public Optional<Book> getBookById(Long id)
+	{
+		return bookRepository.findById(id);
 	}
 }

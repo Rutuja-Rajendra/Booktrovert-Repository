@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Delete Books</title>
+	</head>
+	
+	<body>
+		
+		<h1>Delete Books</h1>
+		
+		<div class="deletebook">
+			
+			<label>Book Id: </label>
+			<input type="number" id="bookid">
+			<input type="button" id="delete" value="Delete">
+			<input type="button" id="cancel" value="Cancel">
+		</div>
+	</body>
+	
+	<script>
+		
+		const base_url = "http://localhost:8081/api/books";
+		
+		document.getElementById("delete").addEventListener("click", function(){
+			
+			const bookId = document.getElementById("bookid").value;
+			
+			if(!bookId)
+			{
+				alert("Please enter book Id!");
+				return;
+			}
+			
+			fetch(`${base_url}/${bookId}`, {
+				method: "DELETE"
+			})
+			.then(res => {
+				if(res.status === 200)
+				{
+					alert("Book deleted successfully!");
+				}
+				else if(res.status === 400)
+				{
+					alert("Book not found");
+				}
+				else
+				{
+					alert("Failed to delete the book.");
+				}
+			})
+			.catch(error => {
+				console.error("Error", error);
+			});
+			
+		});
+		
+		document.getElementById("cancel").addEventListener("click", function(){
+			document.getElementById("bookid").value = "";
+		});
+	</script>
+</html>

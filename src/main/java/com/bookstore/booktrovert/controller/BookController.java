@@ -1,8 +1,10 @@
 package com.bookstore.booktrovert.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,18 +27,18 @@ public class BookController {
 	@Autowired
 	private BookService bookService;
 	
-	@GetMapping("/addbooks")
-	public String testingGet()
-	{
-		return "Get is working";
-	}
+//	@GetMapping("/addbooks")
+//	public String testingGet()
+//	{
+//		return "Get is working";
+//	}
 
 	
-//	@PostMapping("/addbooks")
-//	public Book addBook(@RequestBody Book book)
-//	{
-//		return bookService.addBook(book);
-//	}
+	@PostMapping("/addbooks")
+	public Book addBook(@RequestBody Book book)
+	{
+		return bookService.addBook(book);
+	}
 	
 	@GetMapping("/getbooks")
 	public List<Book> getAllBooks()
@@ -51,8 +53,18 @@ public class BookController {
 	}
 	
 	@DeleteMapping("/{id}")
-	public void deleteBook(@PathVariable Long id)
+	public ResponseEntity<String> deleteBook(@PathVariable Long id)
 	{
-		bookService.deleteBook(id);
+		Optional<Book> book = bookService.getBookById(id);
+		
+		if(book.isPresent())
+		{
+			bookService.deleteBook(id);
+			return ResponseEntity.ok("Book Deleted Successfully");
+		}
+		else
+		{
+			return ResponseEntity.status(404).body("Book not found");
+		}
 	}
 }
