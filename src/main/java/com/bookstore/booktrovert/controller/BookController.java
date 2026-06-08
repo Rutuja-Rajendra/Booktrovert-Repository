@@ -46,6 +46,12 @@ public class BookController {
 		return bookService.getAllBooks();
 	}
 	
+	@GetMapping
+	public List<Book> getBooks()
+	{
+		return bookService.getAllBooks();
+	}
+	
 	@PutMapping("/{id}")
 	public Book updateQuantity(@PathVariable Long id, @RequestParam int quantity)
 	{

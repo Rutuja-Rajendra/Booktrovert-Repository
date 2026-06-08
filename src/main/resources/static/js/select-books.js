@@ -2,11 +2,12 @@ let selectedItems = [];
 
 function loadBooks()
 {
+	const query = document.getElementById("search").value.toLowerCase();
+	
 	fetch("http://localhost:8081/api/books")
 	.then(res => res.json())
 	.then(data => {
 		const table = document.getElementById("bookTable");
-		//
 		
 		if(!table)
 			{
@@ -15,8 +16,20 @@ function loadBooks()
 			}
 			
 			table.innerHTML = "";
+			
+		//filter by search quesry if one exists
+		const filtered = query
+		? data.filter(book => book.name.toLowerCase(). includes(query))
+		: data;
 		
-		data.forEach(book =>
+		if(filtered.length === 0)
+			{
+				table.innerHTML = `<tr><td colspan="5">No books found</td></tr>`;
+				return;
+			}
+			
+		
+		filtered.forEach(book =>
 			{
 				const row = document.createElement("tr");
 				
@@ -30,7 +43,8 @@ function loadBooks()
 				
 				table.appendChild(row);
 			});
-	});
+	})
+	.catch(err => console.error("Failed to load books:"+err));
 }
 
 function addBook(bookId)

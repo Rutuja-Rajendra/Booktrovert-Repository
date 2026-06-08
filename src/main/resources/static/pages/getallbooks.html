@@ -1,55 +1,51 @@
 <!DOCTYPE html>
+
 <html>
-	<head>
-		<title>Get All Books</title>
-	</head>
+	
+<title>Manage Books</title>
+<link rel="stylesheet" href="../css/managebooks.css">
+
+</html>
+
+<head>
 	
 	<body>
 		
-		<h1>Get All Books</h1>
+		<h2> Manage Books</h2>
 		
-		<div class="getallbooks">
-			<table id= "bookstable" border="1">
-				<thead>
-					<tr>
-						<th>ID</th>
-						<th>Name</th>
-						<th>Author</th>
-						<th>Price</th>
-						<th>Quantity</th>
-					</tr>
-				</thead>
-				<tbody id="booktablebody">
-						
-				</tbody>
-			</table>
+		<button onclick="showAddForm()">Add Books</button>
+		
+		<div id="addForm" style="display: none; margi-top: 10px">
+		
+			<input type="text" id="author" placeholder="Author Name">
+			<input type="text" id="name" placeholder="Book Name">
+			<input type="number" id="price" placeholder="Price">
+			<input type="number" id="quantity" placeholder="Quantity">
+			
+			<button onclick="addBook()">Save</button>
+			<button onclick="hideAddForm">Cancel</button>
+			
 		</div>
 		
-	</body>
-	
-	<script>
+		<br><br>
 		
-		const base_url = "http://localhost:8081/api/books";
-		
-		fetch(base_url + "/getbooks")
-		.then(res => res.json())
-		.then(data => {
-			let tablebody = document.getElementById("booktablebody");
+		<table border="1" cellpadding = "8">
 			
-			data.forEach(book => {
-				let row = `
+			<thead>
+				
 				<tr>
-					<td>${book.id}</td>
-					<td>${book.name}</td>
-					<td>${book.author}</td>
-					<td>${book.price}</td>
-					<td>${book.quantity}</td>
+					
+					<th>ID</th>
+					<th>Author</th>
+					<th>Name</th>
+					<th>Price</th>
+					<th>Quantity</th>
 				</tr>
-				`;
-				tablebody.innerHTML += row;	
-			});
-		})
-		.catch(error => console.error("Error", error));
-		
-	</script>
-</html>
+			</thead>
+			
+			<tbody id="bookTable"></tbody>
+			
+		</table>
+	</body>
+</head>
+

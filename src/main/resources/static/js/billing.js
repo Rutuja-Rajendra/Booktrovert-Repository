@@ -1,8 +1,14 @@
-generateBill()
+function generateBill()
 {
 	const items = JSON.parse(localStorage.getItem("billItems"));
 	
-	fetch("http://localhost:8081/api/billing/generate", {
+	if(!items || items === 0)
+		{
+			alert("No items seletcted!");
+			return;
+		}
+	
+	fetch("http://localhost:8081/api/billing", {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json"
@@ -17,5 +23,5 @@ generateBill()
 		
 	})
 	
-	.catch(err => alert("Error generating bill"));
+	.catch(err => alert("Error generating bill:"+err));
 }
