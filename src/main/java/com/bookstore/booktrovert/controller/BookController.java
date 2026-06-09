@@ -41,21 +41,30 @@ public class BookController {
 	}
 	
 	@GetMapping("/getbooks")
-	public List<Book> getAllBooks()
-	{
-		return bookService.getAllBooks();
-	}
-	
-	@GetMapping
 	public List<Book> getBooks()
 	{
 		return bookService.getAllBooks();
 	}
 	
-	@PutMapping("/{id}")
-	public Book updateQuantity(@PathVariable Long id, @RequestParam int quantity)
+	@GetMapping
+	public List<Book> getAllBooks()
 	{
-		return bookService.updateQuantity(id, quantity);
+		return bookService.getAllBooks();
+	}
+	
+	@PutMapping("/{id}")
+	public ResponseEntity<?> updateQuantity(@PathVariable Long id, @RequestParam int quantity)
+	{
+		try
+		{
+			Book updated = bookService.updateQuantity(id, quantity);
+			return ResponseEntity.ok(updated);
+		}
+		catch(RuntimeException e)
+		{
+			return ResponseEntity.status(404).body("Book Not Found");
+		}
+		
 	}
 	
 	@DeleteMapping("/{id}")

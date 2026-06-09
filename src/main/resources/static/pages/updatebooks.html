@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Update Books</title>
+		<link rel="stylesheet" href="../css/style.css">
+	</head>
+	
+	<body>
+		
+		<h1>Update Book Quantity</h1>
+		
+		<a href="index.html">Back to Home</a>
+		
+		<br><br>
+		
+		<div class="card" style="width: 400px;">
+			
+			<label>Book ID: </label>
+			<input type="number" id="bookId" placeholder="Enter Book ID: ">
+			
+			<br> <br>
+			
+			<label>New Quantity</label>
+			<input type="number" id="quantity" placeholder="Enter New Quantity: " min="0">
+			
+			<br> <br>
+			
+			<input type="button" id="update" value="Update">
+			<input type="button" id="cancel" value="Cancel">
+			
+		</div>
+		
+		<div id="message" style="margin-top: 16px; font-weight: bold;"></div>
+		
+	</body>
+	
+	<script>
+		
+		const base_url = "http://localhost:8081//api/books";
+		
+		document.getElementById("update").addEventListener("click", function()
+		{
+			const bookId = document.getElementById("bookId").value;
+			const quantity = document.getElementById("quantity").value;
+			
+			if(!bookId || !quantity)
+			{
+				alert("Please fill all fields");
+				return;
+			}
+			
+			fetch(`${base_url}/${bookId}?quantity=${quantity}`,
+			{
+				method:"PUT"
+			})
+			.then(res => 
+			{
+				if(res.ok)
+				{
+					return res.json();
+				}
+				else if(res.status === 404)
+				{
+					throw new Error("Book Not Found.");
+				}
+				else
+				{
+					throw new Error("Failed to Update the book.");
+				}
+			})
+			.then(data =>
+			{
+				document.getElementById("message").style.color = "green";
+				document.getElementById("message").innerText = 
+				`Updated! "${data.name}" now has ${data.quantity} copies.`;
+				
+				document.getElementById("bookId").value ="";
+				document.getElementById("quantity").value = "";
+			})
+			.catch(err => 
+			{
+				document.getElementById("message").style.color = "red";
+				document.getElementById("message").innerText = err.message;
+			});
+			
+		});
+		
+		document.getElementById("cancel").addEventListener("click", function()
+		{
+			document.getElementById("bookId").value = "";
+			document.getElementById("quantiity").value = "";
+			document.getElementById("message").innerText="";
+		});
+		
+	</script>
+</html>

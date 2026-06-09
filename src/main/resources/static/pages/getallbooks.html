@@ -2,34 +2,20 @@
 
 <html>
 	
-<title>Manage Books</title>
-<link rel="stylesheet" href="../css/managebooks.css">
-
-</html>
-
 <head>
+<title>Get All Books</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
 	
 	<body>
 		
-		<h2> Manage Books</h2>
+		<h2> Get All Books</h2>
+		<a href="index.html">Go to Home</a>
 		
-		<button onclick="showAddForm()">Add Books</button>
+		<br> <br>
 		
-		<div id="addForm" style="display: none; margi-top: 10px">
 		
-			<input type="text" id="author" placeholder="Author Name">
-			<input type="text" id="name" placeholder="Book Name">
-			<input type="number" id="price" placeholder="Price">
-			<input type="number" id="quantity" placeholder="Quantity">
-			
-			<button onclick="addBook()">Save</button>
-			<button onclick="hideAddForm">Cancel</button>
-			
-		</div>
-		
-		<br><br>
-		
-		<table border="1" cellpadding = "8">
+		<table border="1" cellpadding = "8" id="bookstable">
 			
 			<thead>
 				
@@ -43,9 +29,46 @@
 				</tr>
 			</thead>
 			
-			<tbody id="bookTable"></tbody>
+			<tbody id="booktableBody"></tbody>
 			
 		</table>
+		
 	</body>
-</head>
+	
+	<script>
+		
+		const base_url = "http://localhost:8081/api/books";
+		
+		fetch(base_url)
+		.then(res => res.json())
+		.then(data => 
+		{
+			const tableBody = document.getElementById("booktableBody");
+			
+			if(data.length === 0)
+			{
+				tableBody.innerHTML = `<tr><td colspan="5">No Books Found</td></tr>`;
+				return;
+			}
+			
+			data.forEach(book => 
+			{
+				let row = `
+				<tr>
+					<td>${book.id}</td>
+					<td>${book.name}</td>
+					<td>${book.author}</td>
+					<td>${book.price}</td>
+					<td>${book.quantity}</td>
+				</tr>
+				`;
+				
+				tableBody.innerHTML +=row;
+			});
+			
+		})
+		
+		.catch(error => console.error("Error loading books:",error));
+	</script>
+</html>
 
