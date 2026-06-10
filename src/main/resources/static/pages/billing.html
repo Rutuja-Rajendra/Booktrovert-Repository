@@ -2,15 +2,53 @@
 <html>
 	<head>
 		<title>Billing</title>
+		<link rel="stylesheet" href="../css/style.css">
 	</head>
 	
 	<body>
 		
 		<h2>Billing</h2>
-		<button onclick="generateBill()">Generate Bill</button>
+		<a href="index.html">Back to Home</a>
+		<br><br>
 		
-		<pre id="result"></pre>
+		<a href="select-books.html" style="margin-left: 20px;">Add More Books</a>
+		<br><br>
 		
-		<script src="/js/billing.js"></script>
+		<div id="cartSection">
+			<h3>Items in Cart</h3>
+			<div id="cartItems">No items in cart.<a href="select-books.html">Go select books first</a></div>
+		</div>
+		
+		<br>
+		
+		<button onclick="generateBill()" id="billBtn">Generate Bill</button>
+		
+		<br><br>
+
+		<div id="receiptSection" style="display: none;">
+			<h3>Bill Receipt</h3>
+			<div class="card" style="width: 500px;">
+				<p><strong>Bill ID: <span id="billId"></span></strong></p>
+				<p><strong>Date: <span id="billDate"></span></strong></p>
+				<hr>
+				
+				<table border="1" cellpadding="8" width="100%">
+					<thead>
+						<tr>
+							<th>Book</th>
+							<th>Qty</th>
+							<th>Price</th>
+							<th>Subtotal</th>
+						</tr>
+					</thead>
+					
+					<tbody id="receiptItems"></tbody>
+				</table>
+				<hr>
+				<p style="font-size: 18px;"><strong>Total: Rs. <span id="totalAmount"></span></strong></p>
+			</div>
+		</div>	
+		
+		<script src="../js/billing.js"></script>	
 	</body>
 </html>

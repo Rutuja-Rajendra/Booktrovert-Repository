@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Inventory</title>
+		<link rel="stylesheet" href="../css/style.css">
+	</head>
+	
+	<body>
+		
+		<h1>Inventory</h1>
+		<a href="index.html">Back to Home</a>
+		
+		<br><br>
+		
+		<table border="1" cellpadding = "8" id="inventoryTable" >
+			
+			<thead>
+				<tr>
+					<th>ID</th>	
+					<th>Book Name</th>
+					<th>Author</th>
+					<th>Price</th>
+					<th>Quantity</th>
+					<th>Status</th>
+				</tr>
+			</thead>
+			
+			<tbody id="inventorytableBody"></tbody>
+			
+		</table>
+		
+	
+	</body>
+	
+	<script>
+		
+		const base_url = "http://localhost:8081/api/books";
+		
+		fetch(base_url)
+		.then(res => res.json())
+		.then(data => 
+		{
+			const body = document.getElementById("inventorytableBody");
+			
+			if(data === 0)
+			{
+				body.innerHTML= `<tr><td colspan="6">No Books Found</td></tr>`;
+				return;
+			}
+			
+			data.forEach(book =>
+			{
+				let status, color;
+				
+				if(book.quantity === 0)
+				{
+					status = "Out of stock";
+					color = "red";
+				}
+				else if(book.quantity <= 5)
+				{
+					status = "Low stock";
+					color = "orange";
+				}
+				else
+				{
+					status = "In stock";
+					color = "green";
+				}
+				
+				const row = `
+					<tr>
+						<td>${book.id}</td>
+						<td>${book.name}</td>
+						<td>${book.author}</td>
+						<td>Rs. ${book.price}</td>
+						<td>${book.quantity}</td>
+						<td style="color: ${color}; font-weight: bold;">${status}</td>
+					</tr>
+					`;
+					
+					body.innerHTML += row;
+			});
+		})
+		.catch(err => console.error("Error loading inventory: ",err));
+		
+	</script>
+	
+</html>

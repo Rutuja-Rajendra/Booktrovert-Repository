@@ -1,78 +1,37 @@
-const BASE_URL = "http://localhost:8081/api/reports";
+const base_url = "http://localhost:8081/api/reports";
 
-const revenueEl = document.getElementById("revenue");
-const billsE2 = document.getElementById("bills");
-const salesE3 = document.getElementById("totalsales");
-const topbooksE4 = document.getElementById("totalsales");
-
-if(revenueEl){
-	fetch(BASE_URL + "/revenue")
+fetch(base_url+ "/revenue")
 	.then(res => res.json())
-	.then(data => document.getElementById("revenue").innerText = data);
-}
-
-if(billsE2){
-fetch(BASE_URL + "/total-bills")
-	.then(res => res.json())
-	.then(data => document.getElementById("bills").innerText = data);
-}	
-
-if(salesE3){
-fetch(BASE_URL + "/total-sales")
-	.then(res => res.json())
-	.then(data => document.getElementById("totalsales").innerText = data);
-}
-
-if(topbooksE4){
-fetch(BASE_URL + "/top-books")
-	.then(res => res.json())
-	.then(data => {
-		const ul = document.getElementById("topbooks");
-		data.forEach(book => {
-			const li = document.createElement("li");
-			li.innerText = book;
-			ul.appendChild(li);
-		});
-	});
-}
+	.then(data => document.getElementById("revenue").innerText = data)
+	.catch(() => document.getElementById("revenue").innerText = "Error");
 	
-function loadPage(page)
-{
-	const content = document.getElementById("content");
+fetch(base_url + "/total-bills")
+	.then(res => res.json())
+	.then(data => document.getElementById("totalbills").innerText = data)
+	.catch(() => document.getElementById("totalbills").innerText = "Error");
 	
-	if(page === "books")
+fetch(base_url + "/total-sales")
+	.then(res => res.json())
+	.then(data => document.getElementById("totalsales").innerText = data)
+	.catch(() => document.getElementById("totalsales").innerText = "Error");
+	
+fetch(base_url + "/top-books")
+	.then(res => res.json())
+	.then(data => 
 		{
-			fetch("/pages/getallbooks.html")
-			.then(res => res.text())
-			.then(html => {
-				content.innerHTML = html;
-				 if (typeof loadBooks === "function") loadBooks();
-			});
-		}
-		
-		else if(page === "billing")
+			const ul = document.getElementById("topbooks");
+			
+			if(data.length === 0)
 			{
-				fetch("/pages/billing.html")
-				.then(res => res.text())
-				.then(html => {content.innerHTML = html;
-					if (typeof loadBilling === "function") loadBilling();
-
-			});
+				ul.innerHTML = "<li>No sales data yet</li>";
+				return;
 			}
 			
-		else if(page === "inventory")
+			data.forEach(book => 
 			{
-				fetch("/pages/inventory.html")
-				.then(res => res.text())
-				.then(html => {content.innerHTML = html;
-				if (typeof loadInventory === "function") loadInventory();
-				});
-
-			}
-			
-		else
-		{
-			content.innerHTML = `<h2>${page} Page coming soon </h2>`;
-		}
-}
-
+				const li = document.createElement("li");
+				li.innerText = book;
+				ul.appendChild(li);		
+			});
+		})
+		.catch(() => document.getElementById("topbooks").innerHTML = "<li>Error loading data</li>");

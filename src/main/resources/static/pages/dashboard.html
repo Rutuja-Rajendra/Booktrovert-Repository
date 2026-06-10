@@ -8,18 +8,36 @@
 	<body>
 		
 		<h1>Bookstore Dashboard</h1>
+		<a href="index.html">Back to Home</a>
 		
-		<div class="card">Total Revenue: Rs. <span id="revenue">0</span></div>
-		<div class="card">Total Bills: Rs. <span id="bills">0</span></div>
-		<div class="card">Total Sales: Rs. <span id="totalsales">0</span></div>
-
+		<br><br>
+		
+		<div class="nav-grid">
+			
+			<div class="card">
+				<h3>Total Revenu</h3>
+				<p style="font-size: 24px; font-weight: bold;">Rs. <span id="revenue">Loading...</span></p>
+			</div>
+			
+			<div class="card">
+				<h3>Total Bills</h3>
+				<p style="font-size: 24px; font-weight: bold;"><span id="totalbills">Loading...</span></p>
+			</div>
+			
+			<div class="card">
+				<h3>Today's Sales</h3>
+				<p style="font-size: 24px; font-weight: bold;">Rs. <span id="totalsales">Loading...</span></p>
+			</div>
+		</div>
+		
+		<br> 
 		
 		
-		<h3>Top selling Books</h3>
-		
+		<h3>Top Selling Books</h3>
 		<ul id="topbooks"></ul>
 		
 		<script src="../js/dashboard.js"></script>
+		
 	</body>
 	
 </html>
