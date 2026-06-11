@@ -1,4 +1,4 @@
-let selectedItems = [];
+let selectedItems = JSON.parse(localStorage.getItem("billItems")) || [];
 
 function loadBooks()
 {
@@ -57,11 +57,25 @@ function addBook(bookId)
 			return;
 		}
 		
+		const existing = selectedItems.find(item => parseInt(item.bookId) === parseInt(bookId));
 		
-		selectedItems.push({
-			bookId : bookId,
-			quantity : parseInt(qty)
-		});
+		if(existing)
+			{
+				existing.quantity += parseInt(qty);
+				alert("Book quantity updates in cart.");
+			}
+			else
+			{
+				selectedItems.push({
+					bookId: bookId,
+					quantity: parseInt(qty)
+				});
+				alert("Book added to cart.");
+			}
+			
+			localStorage.setItem("billItems", JSON.stringify(selectedItems));
+		
+		
 		
 		alert("Book added");
 		localStorage.setItem("billItems", JSON.stringify(selectedItems));

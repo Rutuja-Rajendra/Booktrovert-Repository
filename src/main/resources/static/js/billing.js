@@ -38,7 +38,21 @@ function generateBill() {
 		},
 		body: JSON.stringify({ items: items })
 	})
-	.then(res => res.json())
+	.then(res => 
+		{
+			if(res.status === 400)
+				{
+					return res.text().then(msg => 
+						{
+							throw new Error(msg);
+						});
+				}
+				if(!res.ok)
+					{
+						throw new Error("Failed to generate bill");
+					}
+					return res.json();
+		})
 	.then(bill => {
 		// fetch full bill details with items
 		return fetch(`http://localhost:8081/api/billing/${bill.id}`)
@@ -70,5 +84,11 @@ function generateBill() {
 		document.getElementById("cartSection").style.display = "none";
 		document.getElementById("billBtn").style.display = "none";
 	})
-	.catch(err => alert("Error generating bill: " + err));
+	.catch(err => 
+		{
+			const errorDiv = document.getElementById("erroMessage");
+			errorDiv.style.display = "block";
+			errorDiv.innerText = err.message;
+		}
+	)
 }

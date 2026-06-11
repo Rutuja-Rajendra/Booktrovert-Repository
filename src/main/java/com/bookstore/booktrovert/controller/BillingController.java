@@ -1,5 +1,6 @@
 package com.bookstore.booktrovert.controller;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,9 +27,17 @@ public class BillingController {
 	}
 	
 	@PostMapping
-	public Bill generateBill(@RequestBody BillRequestDTO request)
+	public ResponseEntity<?> generateBill(@RequestBody BillRequestDTO request)
 	{
-		return billingService.generateBill(request);
+		try
+	    {
+	        Bill bill = billingService.generateBill(request);
+	        return ResponseEntity.ok(bill);
+	    }
+	    catch(RuntimeException e)
+	    {
+	        return ResponseEntity.status(400).body(e.getMessage());
+	    }
 	}
 	
 	

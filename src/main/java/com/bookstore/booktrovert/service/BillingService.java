@@ -88,7 +88,7 @@ public class BillingService {
 			
 			if(book.getQuantity() < item.getQuantity())
 			{
-				throw new RuntimeException("Insufficient Stock");
+				throw new RuntimeException("Sorry! Insufficient Stock.");
 			}
 			
 			//reduce inventory
