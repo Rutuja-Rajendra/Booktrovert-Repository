@@ -9,15 +9,17 @@
 	<body onload="loadBooks()">
 		
 		<h2>Select Books</h2>
-		<a href="index.html">Back to Home</a>
+		<a href="index.html">Go Back to Home</a>
 		<br><br>
 		
 		<input type="text" id="search" placeholder="Search Books">
 		<button onclick="loadBooks()">Search</button>
 		
+		<br><br>
 		<table border="1">
 		    <thead>
 		        <tr>
+					<th>ID</th>
 		            <th>Book</th>
 		            <th>Price</th>
 		            <th>Available</th>
@@ -32,6 +34,7 @@
 
 		</table>
 		
+		<br>
 		<a href="billing.html">Go to Billings</a>
 		
 		<script src="/js/select-books.js"></script>

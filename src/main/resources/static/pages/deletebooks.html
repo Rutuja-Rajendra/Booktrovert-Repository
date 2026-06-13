@@ -2,61 +2,73 @@
 <html>
 	<head>
 		<title>Delete Books</title>
+		<link rel="stylesheet" href="../css/style.css">
 	</head>
-	
+
 	<body>
-		
+
 		<h1>Delete Books</h1>
-		<a href="index.html">Back to Home</a><br><br>
-		
-		<div class="deletebook">
-			
-			<label>Book Id: </label>
-			<input type="number" id="bookid">
-			<input type="button" id="delete" value="Delete">
+		<a href="index.html"> Go Back to Home</a>
+
+		<br><br>
+
+		<div class="card" style="width: 400px;">
+
+			<label>Book ID: </label>
+			<input type="number" id="bookid" placeholder="Enter Book ID">
+
+			<br><br>
+
+			<input type="button" id="delete" value="Delete Book">
 			<input type="button" id="cancel" value="Cancel">
+
 		</div>
+
+		<div id="message" style="margin-top: 16px; font-weight: bold;"></div>
+
 	</body>
-	
+
 	<script>
-		
+
 		const base_url = "http://localhost:8081/api/books";
-		
-		document.getElementById("delete").addEventListener("click", function(){
-			
+
+		document.getElementById("delete").addEventListener("click", function() {
+
 			const bookId = document.getElementById("bookid").value;
-			
-			if(!bookId)
-			{
-				alert("Please enter book Id!");
+
+			if (!bookId) {
+				alert("Please enter Book ID!");
 				return;
 			}
-			
+
 			fetch(`${base_url}/${bookId}`, {
 				method: "DELETE"
 			})
 			.then(res => {
-				if(res.status === 200)
-				{
-					alert("Book deleted successfully!");
+				if (res.status === 200) {
+					document.getElementById("message").style.color = "green";
+					document.getElementById("message").innerText = " Book deleted successfully!";
+					document.getElementById("bookid").value = "";
 				}
-				else if(res.status === 404)
-				{
-					alert("Book not found");
+				else if (res.status === 404) {
+					document.getElementById("message").style.color = "red";
+					document.getElementById("message").innerText = " Book not found!";
 				}
-				else
-				{
-					alert("Failed to delete the book.");
+				else {
+					document.getElementById("message").style.color = "red";
+					document.getElementById("message").innerText = " Failed to delete the book.";
 				}
 			})
-			.catch(error => {
-				console.error("Error", error);
+			.catch(err => {
+				document.getElementById("message").style.color = "red";
+				document.getElementById("message").innerText = " Error: " + err.message;
 			});
-			
 		});
-		
-		document.getElementById("cancel").addEventListener("click", function(){
+
+		document.getElementById("cancel").addEventListener("click", function() {
 			document.getElementById("bookid").value = "";
+			document.getElementById("message").innerText = "";
 		});
+
 	</script>
 </html>
